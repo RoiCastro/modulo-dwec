@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Formulario HTML5 - DWEC</title>
+    </head>
+    <body>
+        <form action="#" method="POST">
+            <fieldset>
+                <legend>Datos personales y acceso</legend>
+                <p>
+                    <label for="nombre">Nombre:</label>
+                    <input
+                        type="text"
+                        id="nombre"
+                        name="nombre"
+                        required
+                        minlength="3"
+                        placeholder="Escribe tu nombre"
+                    />
+                </p>
+                <p>
+                    <label for="correo">Correo electrónico:</label>
+                    <input type="email" id="correo" name="correo" />
+                </p>
+                <p>
+                    <label for="contrasena">Contraseña:</label>
+                    <input type="password" id="contrasena" name="contrasena" />
+                </p>
+                <p>
+                    <label for="number">Numero</label>
+                    <input type="number" min="1" max="100" />
+                </p>
+            </fieldset>
+            <fieldset>
+                <legend>Preferencias y comentarios</legend>
+                <p>
+                    <label for="nivel">Rango:</label>
+                    <input
+                        type="range"
+                        id="nivel"
+                        name="nivel"
+                        min="1"
+                        max="5"
+                        list="valores-nivel"
+                    />
+                    <datalist id="valores-nivel">
+                        <option value="1" label="Inicial"></option>
+                        <option value="2"></option>
+                        <option value="3" label="Intermedio"></option>
+                        <option value="4"></option>
+                        <option value="5" label="Avanzado"></option>
+                    </datalist>
+                </p>
+                <p>Formato preferido:</p>
+                <p>
+                    <input
+                        type="radio"
+                        id="formato-presencial"
+                        name="formato"
+                        value="presencial"
+                    />
+                    <label for="formato-presencial">Presencial</label>
+                    <input
+                        type="radio"
+                        id="formato-distancia"
+                        name="formato"
+                        value="distancia"
+                    />
+                    <label for="formato-distancia">A distancia</label>
+                </p>
+                <p>
+                    <input
+                        type="checkbox"
+                        id="novedades"
+                        name="novedades"
+                        value="si"
+                    />
+                    <label for="novedades">Quiero recibir novedades</label>
+                </p>
+                <p>
+                    <label for="tema">Tema de interés:</label>
+                    <select id="tema" name="tema">
+                        <optgroup label="Desarrollo web">
+                            <option value="html">HTML</option>
+                            <option value="css">CSS</option>
+                            <option value="javascript">JavaScript</option>
+                        </optgroup>
+                        <optgroup label="Otros">
+                            <option value="bases-de-datos">
+                                Bases de datos
+                            </option>
+                            <option value="accesibilidad">Accesibilidad</option>
+                        </optgroup>
+                    </select>
+                </p>
+                <p>
+                    <label for="comentarios">Comentarios:</label>
+                    <textarea
+                        id="comentarios"
+                        name="comentarios"
+                        rows="4"
+                        cols="50"
+                    ></textarea>
+                </p>
+            </fieldset>
+            <button type="submit">Enviar</button>
+            <button type="reset">Limpiar</button>
+        </form>
+    </body>
+</html>

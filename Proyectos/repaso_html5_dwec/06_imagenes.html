@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Imágenes HTML5 - DWEC</title>
+    </head>
+    <body>
+        <header></header>
+        <main>
+            <article>
+                <header>Muere manolo el del bombo</header>
+                <figure>
+                    <picture>
+                        <source
+                            media="(min-width: 1024px)"
+                            srcset="img/manolo.jpg"
+                        />
+                        <source
+                            media="(min-width: 600px)"
+                            srcset="img/manolo-800.jpg"
+                        />
+                        <source
+                            media="(max-width: 599px)"
+                            srcset="img/manolo-480.jpg"
+                        />
+                        <img
+                            srcset="img/manolo.jpg"
+                            alt="Manolo el del Bombo"
+                            style="max-width: 100%; height: auto"
+                        />
+                    </picture>
+                    <figcaption>Imagen de Manolo el del Bombo.</figcaption>
+                </figure>
+            </article>
+            <section></section>
+            <aside></aside>
+        </main>
+        <footer></footer>
+    </body>
+</html>
