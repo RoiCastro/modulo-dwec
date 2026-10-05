@@ -1,0 +1,316 @@
+<!doctype html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8" />
+        <title>CALCULADORA</title>
+        <style type="text/css">
+            #calculadora {
+                background: gray;
+                border: 0;
+            }
+            #calculadora td {
+                padding: 4px;
+            }
+            .cajita_valor {
+                background-color: #acff38;
+                color: #467702;
+                border: 1px solid #454545;
+                width: 130px;
+                height: 26px;
+                font-family: Arial, Helvetica;
+                font-size: 20px;
+                line-height: 26 px;
+                text-align: right;
+            }
+            .boton {
+                width: 24px;
+                border: 1px solid #000;
+                font-family: Arial;
+                font-size: 12px;
+                cursor: hand;
+                background-color: #fff;
+            }
+            .boton_largo {
+                width: 62px;
+                border: 1px solid #000;
+                font-family: Arial;
+                font-size: 12px;
+                cursor: hand;
+                background-color: #fff;
+            }
+            .funcion {
+                font-weight: bold;
+                color: #b00;
+            }
+        </style>
+    </head>
+    <body>
+        <table id="calculadora">
+            <tr>
+                <td colspan="4">
+                    <input
+                        type="text"
+                        id="valor_numero"
+                        maxlength="20"
+                        value="0"
+                        class="cajita_valor"
+                        readonly="true"
+                    />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input
+                        type="Button"
+                        id="potencia"
+                        value="exp"
+                        class="boton_largo funcion"
+                        onclick="operar(5)"
+                    />
+                </td>
+                <td>
+                    <input
+                        type="Button"
+                        id="Dividir"
+                        value="/"
+                        class="boton funcion"
+                        onclick="operar(4)"
+                    />
+                </td>
+                <td>
+                    <input
+                        type="Button"
+                        id="Multiplicar"
+                        value="x"
+                        class="boton funcion"
+                        onclick="operar(3)"
+                    />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input
+                        type="Button"
+                        id="7"
+                        value="7"
+                        class="boton"
+                        onclick="darNumero(value)"
+                    />
+                </td>
+                <td>
+                    <input
+                        type="Button"
+                        id="8"
+                        value="8"
+                        class="boton"
+                        onclick="darNumero(value)"
+                    />
+                </td>
+                <td>
+                    <input
+                        type="Button"
+                        id="9"
+                        value="9"
+                        class="boton"
+                        onclick="darNumero(value)"
+                    />
+                </td>
+                <td>
+                    <input
+                        type="Button"
+                        id="Restar"
+                        value="-"
+                        class="boton funcion"
+                        onclick="operar(2)"
+                    />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input
+                        type="Button"
+                        id="4"
+                        value="4"
+                        class="boton"
+                        onclick="darNumero(value)"
+                    />
+                </td>
+                <td>
+                    <input
+                        type="Button"
+                        id="5"
+                        value="5"
+                        class="boton"
+                        onclick="darNumero(value)"
+                    />
+                </td>
+                <td>
+                    <input
+                        type="Button"
+                        id="6"
+                        value="6"
+                        class="boton"
+                        onclick="darNumero(value)"
+                    />
+                </td>
+                <td>
+                    <input
+                        type="Button"
+                        id="Sumar"
+                        value="+"
+                        class="boton funcion"
+                        onclick="operar(1)"
+                    />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input
+                        type="Button"
+                        id="1"
+                        value="1"
+                        class="boton"
+                        onclick="darNumero(value)"
+                    />
+                </td>
+                <td>
+                    <input
+                        type="Button"
+                        id="2"
+                        value="2"
+                        class="boton"
+                        onclick="darNumero(value)"
+                    />
+                </td>
+                <td>
+                    <input
+                        type="Button"
+                        id="3"
+                        value="3"
+                        class="boton"
+                        onclick="darNumero(value)"
+                    />
+                </td>
+                <td>
+                    <input
+                        type="Button"
+                        id="EsIgual"
+                        value="="
+                        class="boton funcion"
+                        onclick="esIgual()"
+                    />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input
+                        type="Button"
+                        id="0"
+                        value="0"
+                        class="boton_largo"
+                        onclick="darNumero(value)"
+                    />
+                </td>
+                <td>
+                    <input
+                        type="Button"
+                        id=","
+                        value=","
+                        class="boton"
+                        onclick="darComa()"
+                    />
+                </td>
+                <td>
+                    <input
+                        type="Button"
+                        id="C"
+                        value="C"
+                        class="boton funcion"
+                        onclick="darC()"
+                    />
+                </td>
+            </tr>
+        </table>
+        <script>
+            //Variables globales
+            let resultadoActual = "0";
+            let operacionActual = 0;
+            let resultadoAnterior = "0";
+            console.log("Hola mundo");
+            /*Comprueba los valores de la variable global de resultados. En caso de que
+            el valor de la variable sea 0 o no sea un decimal con 0, automáticamente
+            toma el valor introducido. Si ninguna de estas condiciones se cumple, el
+            nuevo número se concatena/suma al valor total de la variable.*/
+            function darNumero(numero) {
+                const strNumero = String(numero);
+
+                if (resultadoActual === "0") {
+                    resultadoActual = strNumero;
+                } else {
+                    resultadoActual += strNumero;
+                }
+
+                refrescar();
+            }
+            /*Añade la coma decimal. Realiza la comprobación para que solo los números 
+            positivos y el 0 puedan ser decimales, descartando los números negativos 
+            decimales. Si el resultado actual es negativo y se intenta añadir decimales, 
+            se colocará automáticamente un 0.*/
+            function darComa() {}
+            /*Función de reinicio (tecla C). Borra todos los resultados 
+            almacenados y restablece las variables a 0.*/
+            function darC() {
+                resultadoActual = "0";
+                operacionActual = 0;
+                resultadoAnterior = "0";
+                refrescar();
+            }
+            /*Almacena los valores introducidos y la operación seleccionada para 
+            procesarlos al pulsar igual. Recibe como parámetro un número asignado a cada 
+            operación: 1: Suma (+) 2: Resta (-) 3: Multiplicación (×) 4: División (÷) 5: 
+            Potencia (xⁿ)*/
+            function operar(valor) {
+                resultadoAnterior = resultadoActual;
+                operacionActual = valor;
+                resultadoActual = "0";
+                refrescar();
+            }
+            /*Actualiza el valor visible en la caja de texto/pantalla de la calculadora 
+            en función de los botones o números pulsados para reflejar el estado actual.*/
+            function esIgual() {
+                switch (operacionActual) {
+                    case 1:
+                        resultadoActual =
+                            parseFloat(resultadoAnterior) +
+                            parseFloat(resultadoActual);
+                        break;
+                    case 2:
+                        resultadoActual =
+                            parseFloat(resultadoAnterior) -
+                            parseFloat(resultadoActual);
+                        break;
+                    case 3:
+                        resultadoActual =
+                            parseFloat(resultadoAnterior) *
+                            parseFloat(resultadoActual);
+                        break;
+                    case 4:
+                        resultadoActual =
+                            parseFloat(resultadoAnterior) /
+                            parseFloat(resultadoActual);
+                        break;
+                    case 5:
+                        resultadoActual = Math.pow(
+                            Number(resultadoAnterior),
+                            Number(resultadoActual),
+                        );
+                        break;
+                }
+                refrescar();
+            }
+            function refrescar() {
+                document.getElementById("valor_numero").value = resultadoActual;
+            }
+        </script>
+    </body>
+</html>
