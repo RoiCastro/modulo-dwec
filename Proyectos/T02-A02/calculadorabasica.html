@@ -234,9 +234,9 @@
         <script>
             //Variables globales
             let resultadoActual = "0";
-            let operacionActual = 0;
+            let operacionActual = null;
             let resultadoAnterior = "0";
-            console.log("Hola mundo");
+            let esperandoNumero = true;
             /*Comprueba los valores de la variable global de resultados. En caso de que
             el valor de la variable sea 0 o no sea un decimal con 0, automáticamente
             toma el valor introducido. Si ninguna de estas condiciones se cumple, el
@@ -244,25 +244,36 @@
             function darNumero(numero) {
                 const strNumero = String(numero);
 
-                if (resultadoActual === "0") {
+                if (esperandoNumero || resultadoActual === "0") {
                     resultadoActual = strNumero;
                 } else {
                     resultadoActual += strNumero;
                 }
 
+                esperandoNumero = false;
+                console.log("Resultado actual: ", resultadoActual);
                 refrescar();
             }
             /*Añade la coma decimal. Realiza la comprobación para que solo los números 
             positivos y el 0 puedan ser decimales, descartando los números negativos 
             decimales. Si el resultado actual es negativo y se intenta añadir decimales, 
             se colocará automáticamente un 0.*/
-            function darComa() {}
+            function darComa() {
+                if (esperandoNumero) {
+                    resultadoActual = "0,";
+                    esperandoNumero = false;
+                } else if (!resultadoActual.includes(",")) {
+                    resultadoActual += ",";
+                }
+                refrescar();
+            }
             /*Función de reinicio (tecla C). Borra todos los resultados 
             almacenados y restablece las variables a 0.*/
             function darC() {
                 resultadoActual = "0";
-                operacionActual = 0;
+                operacionActual = null;
                 resultadoAnterior = "0";
+                esperandoNumero = true;
                 refrescar();
             }
             /*Almacena los valores introducidos y la operación seleccionada para 
@@ -270,43 +281,59 @@
             operación: 1: Suma (+) 2: Resta (-) 3: Multiplicación (×) 4: División (÷) 5: 
             Potencia (xⁿ)*/
             function operar(valor) {
+                if (operacionActual !== null && !esperandoNumero) {
+                    calcularOperacion();
+                } else if (operacionActual !== null && esperandoNumero) {
+                    operacionActual = valor;
+                    return;
+                }
+
                 resultadoAnterior = resultadoActual;
                 operacionActual = valor;
                 resultadoActual = "0";
+                esperandoNumero = true;
                 refrescar();
             }
             /*Actualiza el valor visible en la caja de texto/pantalla de la calculadora 
             en función de los botones o números pulsados para reflejar el estado actual.*/
             function esIgual() {
+                if (operacionActual === null || esperandoNumero) {
+                    return;
+                }
+                calcularOperacion();
+                operacionActual = null;
+                resultadoAnterior = String(resultadoActual);
+                esperandoNumero = true;
+                console.log(resultadoActual);
+
+                refrescar();
+            }
+            function calcularOperacion() {
+                // Convierto los valores a float y reeplaza la coma por el punto
+                const anterior = parseFloat(
+                    String(resultadoAnterior).replace(",", "."),
+                );
+                const actual = parseFloat(
+                    String(resultadoActual).replace(",", "."),
+                );
+                // Realiza la operacion correspondiente
                 switch (operacionActual) {
                     case 1:
-                        resultadoActual =
-                            parseFloat(resultadoAnterior) +
-                            parseFloat(resultadoActual);
+                        resultadoActual = anterior + actual;
                         break;
                     case 2:
-                        resultadoActual =
-                            parseFloat(resultadoAnterior) -
-                            parseFloat(resultadoActual);
+                        resultadoActual = anterior - actual;
                         break;
                     case 3:
-                        resultadoActual =
-                            parseFloat(resultadoAnterior) *
-                            parseFloat(resultadoActual);
+                        resultadoActual = anterior * actual;
                         break;
                     case 4:
-                        resultadoActual =
-                            parseFloat(resultadoAnterior) /
-                            parseFloat(resultadoActual);
+                        resultadoActual = anterior / actual;
                         break;
                     case 5:
-                        resultadoActual = Math.pow(
-                            Number(resultadoAnterior),
-                            Number(resultadoActual),
-                        );
+                        resultadoActual = Math.pow(anterior, actual);
                         break;
                 }
-                refrescar();
             }
             function refrescar() {
                 document.getElementById("valor_numero").value = resultadoActual;
