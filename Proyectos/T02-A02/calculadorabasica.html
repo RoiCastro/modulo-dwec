@@ -328,6 +328,10 @@
                         resultadoActual = anterior * actual;
                         break;
                     case 4:
+                        if (anterior == 0 || actual == 0) {
+                            resultadoActual = "error";
+                            break;
+                        }
                         resultadoActual = anterior / actual;
                         break;
                     case 5:
